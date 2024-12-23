@@ -6,26 +6,48 @@ void delay(unsigned int time) {
     for (j = 1; j <= 100; j++);
 }
 
-unsigned char keystatus = 0;
+unsigned char key1status = 0;
+unsigned char key2status = 0;
 unsigned char LED = 1;
 
-void keydown_cb() {}
+void keydown_cb(unsigned char keynum) {}
 
-void keyup_cb() {
-  LED = LED << 1;
-  LED = LED ? LED : 1;
-  P2 = ~LED;
+void keyup_cb(unsigned char keynum) {
+  switch (keynum) {
+    case 1:
+      LED = LED >> 1;
+      LED = LED ? LED : 0x80;
+      P2 = ~LED;
+      break;
+    case 2:
+      LED = LED << 1;
+      LED = LED ? LED : 1;
+      P2 = ~LED;
+      break;
+    default:
+      break;
+  }
 }
 
 void main() {
   P2 = ~LED;
   while (1) {
-    if (keystatus != P3_1) {
-      keystatus = P3_1;
+    if (key1status != P3_1) {
+      key1status = P3_1;
       if (P3_1) {
-        keydown_cb();
+        keydown_cb(1);
       } else {
-        keyup_cb();
+        keyup_cb(1);
+      }
+      delay(20);
+    }
+
+    if (key2status != P3_0) {
+      key2status = P3_0;
+      if (P3_0) {
+        keydown_cb(2);
+      } else {
+        keyup_cb(2);
       }
       delay(20);
     }
