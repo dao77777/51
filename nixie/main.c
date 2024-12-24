@@ -1,10 +1,11 @@
 #include <mcs51/8051.h>
+#include "delay.h"
 
-void delay(unsigned int time) {
-  unsigned int i, j;
-  for (i = 1; i <= time; i++)
-    for (j = 1; j <= 100; j++);
-}
+// void delay(unsigned int time) {
+//   unsigned int i, j;
+//   for (i = 1; i <= time; i++)
+//     for (j = 1; j <= 100; j++);
+// }
 
 unsigned char position_encode(unsigned char num) {
   return ~((num - 1) << 2);
