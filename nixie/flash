@@ -1,0 +1,7 @@
+#!/bin/bash
+
+make
+
+stcflash main.hex
+
+make clean
